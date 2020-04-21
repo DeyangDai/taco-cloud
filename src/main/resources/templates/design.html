@@ -9,9 +9,18 @@
 </head>
 <body>
     <h1>Design your taco!</h1>
+    <h2>
+        Feelin' hungry, <span th:text="${user.fullname}">NAME</span>?
+        <form method="post" th:action="@{/logout}" id="logoutForm">
+            <input type="submit" value="Logout">
+        </form>
+    </h2>
     <img th:src="@{/images/TacoCloud.png}" />
 
-    <form method="post" th:object="${taco}">
+    <form method="post" th:object="${taco}" id="tacoForm" th:action="@{/design}">
+        <span class="validationError" th:if="${#fields.hasErrors('ingredients')}"
+              th:errors="*{ingredients}">Ingredient Error</span>
+
         <div class="grid">
             <div class="ingredient-group" id="wraps">
                 <h3>Design your wrap:</h3>

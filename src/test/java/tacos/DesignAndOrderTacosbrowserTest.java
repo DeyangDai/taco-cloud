@@ -1,5 +1,6 @@
 package tacos;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
+@Slf4j
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class DesignAndOrderTacosbrowserTest {
 
@@ -45,34 +47,77 @@ public class DesignAndOrderTacosbrowserTest {
     public void testDesignATacoPage() throws Exception {
         browser.get(homePageUrl());
         clickDesignATaco();
+        assertLandedOnLoginPage();
+        doRegistration("testuser", "testpassword");
+        assertLandedOnLoginPage();
+        doLogin("testuser", "testpassword");
         assertDesignPageElements();
         buildAndSubmitATaco("Basic Taco", "FLTO", "GRBF", "CHED", "TMTO", "SLSA");
         clickBuildAnotherTaco();
         buildAndSubmitATaco("Another Taco", "COTO", "CARN", "JACK", "LETC", "SRCR");
         fillInAndSubmitOrderForm();
         assertEquals(homePageUrl(), browser.getCurrentUrl());
+        doLogout();
     }
 
     @Test
     public void testDesignATacoPage_EmptyOrderInfo() throws Exception {
         browser.get(homePageUrl());
         clickDesignATaco();
+        assertLandedOnLoginPage();
+        doRegistration("testuser2", "testpassword");
+        doLogin("testuser2", "testpassword");
         assertDesignPageElements();
         buildAndSubmitATaco("Basic Taco", "FLTO", "GRBF", "CHED", "TMTO", "SLSA");
         submitEmptyOrderForm();
         fillInAndSubmitOrderForm();
         assertEquals(homePageUrl(), browser.getCurrentUrl());
+        doLogout();
     }
 
     @Test
     public void testDesignATacoPage_InvalidOrderInfo() throws Exception {
         browser.get(homePageUrl());
         clickDesignATaco();
+        assertLandedOnLoginPage();
+        doRegistration("testuser3", "testpassword");
+        doLogin("testuser3", "testpassword");
         assertDesignPageElements();
         buildAndSubmitATaco("Basic Taco", "FLTO", "GRBF", "CHED", "TMTO", "SLSA");
         submitInvalidOrderForm();
         fillInAndSubmitOrderForm();
         assertEquals(homePageUrl(), browser.getCurrentUrl());
+        doLogout();
+    }
+
+    private void doLogin(String username, String password) {
+        browser.findElementByCssSelector("input#username").sendKeys(username);
+        browser.findElementByCssSelector("input#password").sendKeys(password);
+        browser.findElementByCssSelector("form#loginForm").submit();
+    }
+
+    private void doLogout() {
+        browser.findElementByCssSelector("form#logoutForm").submit();
+    }
+
+    private void doRegistration(String username, String password) {
+        browser.findElementByLinkText("here").click();
+        assertEquals(registrationPageUrl(), browser.getCurrentUrl());
+
+        browser.findElementByName("username").sendKeys(username);
+        browser.findElementByName("password").sendKeys(password);
+        browser.findElementByName("confirm").sendKeys(password);
+        browser.findElementByName("fullname").sendKeys("Test McTest");
+        browser.findElementByName("street").sendKeys("1234 Test Street");
+        browser.findElementByName("city").sendKeys("Testville");
+        browser.findElementByName("state").sendKeys("TX");
+        browser.findElementByName("zip").sendKeys("12345");
+        browser.findElementByName("phone").sendKeys("123-123-1234");
+        browser.findElementByCssSelector("form#registerForm").submit();
+    }
+
+    private void assertLandedOnLoginPage() {
+        assertEquals(loginPageUrl(), browser.getCurrentUrl());
     }
 
     private void submitInvalidOrderForm() {
@@ -85,7 +130,7 @@ public class DesignAndOrderTacosbrowserTest {
         fillField("input#ccNumber", "1234432112344322");
         fillField("input#ccExpiration", "14/91");
         fillField("input#ccCVV", "1234");
-        browser.findElementByCssSelector("form").submit();
+        browser.findElementByCssSelector("form#orderForm").submit();
 
         assertEquals(orderDetailsPageUrl(), browser.getCurrentUrl());
 
@@ -100,7 +145,7 @@ public class DesignAndOrderTacosbrowserTest {
 
     private void submitEmptyOrderForm() {
         assertEquals(currentOrderDetailsPageUrl(), browser.getCurrentUrl());
-        browser.findElementByCssSelector("form").submit();
+        browser.findElementByCssSelector("form#orderForm").submit();
 
         assertEquals(orderDetailsPageUrl(), browser.getCurrentUrl());
 
@@ -155,7 +200,7 @@ public class DesignAndOrderTacosbrowserTest {
             browser.findElementByCssSelector(String.format("input[value=%s]", ingredient)).click();
         }
         browser.findElementByCssSelector("input#name").sendKeys(name);
-        browser.findElementByCssSelector("form").submit();
+        browser.findElementByCssSelector("form#tacoForm").submit();
     }
 
     private void clickDesignATaco() {
@@ -204,6 +249,14 @@ public class DesignAndOrderTacosbrowserTest {
         WebElement ingredient = ingredients.get(idx);
         assertEquals(id, ingredient.findElement(By.tagName("input")).getAttribute("value"));
         assertEquals(name, ingredient.findElement(By.tagName("span")).getText());
+    }
+
+    private String registrationPageUrl() {
+        return homePageUrl() + "register";
+    }
+
+    private String loginPageUrl() {
+        return homePageUrl() + "login";
     }
 
     private String currentOrderDetailsPageUrl() {

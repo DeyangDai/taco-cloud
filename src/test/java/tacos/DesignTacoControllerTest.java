@@ -3,13 +3,18 @@ package tacos;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MockMvc;
 import tacos.data.IngredientRepository;
 import tacos.data.OrderRepository;
 import tacos.data.TacoRepository;
+import tacos.data.UserRepository;
 import tacos.web.DesignTacoController;
 
 import java.util.Arrays;
@@ -41,6 +46,13 @@ public class DesignTacoControllerTest {
     @MockBean
     private OrderRepository orderRepository;
 
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    @Qualifier("userRepositoryUserDetailsService")
+    private UserDetailsService userDetailsService;
+
     @BeforeEach
     public void setup() {
         ingredients = Arrays.asList(
@@ -68,9 +80,14 @@ public class DesignTacoControllerTest {
                         new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
                         new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
                         new Ingredient("CHED", "Cheddar", Type.CHEESE)));
+
+        when(userRepository.findByUsername("testuser"))
+                .thenReturn(new User("testuser", "testpass", "Test User",
+                        "123 Street", "NYC", "NY", "12345", "123-123-1234"));
     }
 
     @Test
+    @WithMockUser(username = "testuser", password = "testpass")
     public void testShowDesignForm() throws Exception {
         mockMvc.perform(get("/design"))
                 .andExpect(status().isOk())
@@ -83,10 +100,12 @@ public class DesignTacoControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "testuser", password = "testpass", authorities = "ROLE_USER")
     public void processDesign() throws Exception {
         when(tacoRepository.save(design)).thenReturn(design);
 
         mockMvc.perform(post("/design")
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
                 .content("name=Test+Taco&ingredients=FLTO,GRBF,CHED")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().is3xxRedirection())
