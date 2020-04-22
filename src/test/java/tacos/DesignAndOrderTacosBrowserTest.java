@@ -22,7 +22,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @Slf4j
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-public class DesignAndOrderTacosbrowserTest {
+public class DesignAndOrderTacosBrowserTest {
 
     private static HtmlUnitDriver browser;
 

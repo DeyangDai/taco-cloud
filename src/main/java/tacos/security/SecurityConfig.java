@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/design", "/orders").hasRole("USER")
                 .antMatchers("/", "/**").permitAll()
-                .and().formLogin().loginPage("/login").defaultSuccessUrl("/design")
+                .and().formLogin().loginPage("/login")
                 .and().logout().logoutSuccessUrl("/")
                 .and().csrf().ignoringAntMatchers("/h2-console/**")
                 .and().headers().frameOptions().sameOrigin();
