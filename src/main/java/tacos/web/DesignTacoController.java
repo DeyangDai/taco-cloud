@@ -2,7 +2,6 @@ package tacos.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,8 +13,10 @@ import tacos.Taco;
 import tacos.User;
 import tacos.data.IngredientRepository;
 import tacos.data.TacoRepository;
+import tacos.data.UserRepository;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,10 +31,16 @@ public class DesignTacoController {
 
     private TacoRepository tacoRepo;
 
+    private UserRepository userRepository;
+
     @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository tacoRepo) {
+    public DesignTacoController(
+            IngredientRepository ingredientRepo,
+            TacoRepository tacoRepo,
+            UserRepository userRepository) {
         this.ingredientRepo = ingredientRepo;
         this.tacoRepo = tacoRepo;
+        this.userRepository = userRepository;
     }
 
     @ModelAttribute(name = "order")
@@ -67,7 +74,7 @@ public class DesignTacoController {
 //    }
 
     @GetMapping
-    public String showDesignForm(Model model, @AuthenticationPrincipal User user) {
+    public String showDesignForm(Model model, Principal principal) {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepo.findAll().forEach(ingredients::add);
 
@@ -77,6 +84,8 @@ public class DesignTacoController {
         }
 
 //        model.addAttribute("design", new Taco());
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username);
         model.addAttribute("user", user);
         return "design";
     }
