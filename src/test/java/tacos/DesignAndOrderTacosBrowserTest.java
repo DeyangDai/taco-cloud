@@ -216,14 +216,14 @@ public class DesignAndOrderTacosBrowserTest {
         WebElement wrapGroup = browser.findElementByCssSelector("div.ingredient-group#wraps");
         List<WebElement> wraps = wrapGroup.findElements(By.tagName("div"));
         assertEquals(2, wraps.size());
-        assertIngredient(wrapGroup, 0, "FLTO", "Flour Tortilla");
-        assertIngredient(wrapGroup, 1, "COTO", "Corn Tortilla");
+        assertIngredient(wrapGroup, 0, "COTO", "Corn Tortilla");
+        assertIngredient(wrapGroup, 1, "FLTO", "Flour Tortilla");
 
         WebElement proteinGroup = browser.findElementByCssSelector("div.ingredient-group#proteins");
         List<WebElement> proteins = proteinGroup.findElements(By.tagName("div"));
         assertEquals(2, proteins.size());
-        assertIngredient(proteinGroup, 0, "GRBF", "Ground Beef");
-        assertIngredient(proteinGroup, 1, "CARN", "Carnitas");
+        assertIngredient(proteinGroup, 0, "CARN", "Carnitas");
+        assertIngredient(proteinGroup, 1, "GRBF", "Ground Beef");
 
         WebElement cheeseGroup = browser.findElementByCssSelector("div.ingredient-group#cheeses");
         List<WebElement> cheeses = proteinGroup.findElements(By.tagName("div"));
@@ -234,8 +234,8 @@ public class DesignAndOrderTacosBrowserTest {
         WebElement veggieGroup = browser.findElementByCssSelector("div.ingredient-group#veggies");
         List<WebElement> veggies = proteinGroup.findElements(By.tagName("div"));
         assertEquals(2, veggies.size());
-        assertIngredient(veggieGroup, 0, "TMTO", "Diced Tomatoes");
-        assertIngredient(veggieGroup, 1, "LETC", "Lettuce");
+        assertIngredient(veggieGroup, 0, "LETC", "Lettuce");
+        assertIngredient(veggieGroup, 1, "TMTO", "Diced Tomatoes");
 
         WebElement sauceGroup = browser.findElementByCssSelector("div.ingredient-group#sauces");
         List<WebElement> sauces = proteinGroup.findElements(By.tagName("div"));

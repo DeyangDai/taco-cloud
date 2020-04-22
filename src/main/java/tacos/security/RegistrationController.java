@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import tacos.User;
 import tacos.data.UserRepository;
 
 @Controller
@@ -28,7 +29,10 @@ public class RegistrationController {
 
     @PostMapping
     public String processRegistration(RegistrationForm form) {
-        userRepository.save(form.toUser(passwordEncoder));
+        User user = form.toUser(passwordEncoder);
+        if (userRepository.findByUsername(user.getUsername()) == null) {
+            userRepository.save(user);
+        }
         return "redirect:/login";
     }
 
