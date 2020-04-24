@@ -36,12 +36,12 @@
         </dependency>
         <dependency>
             <groupId>sia</groupId>
-            <artifactId>tacocloud-api</artifactId>
+            <artifactId>tacocloud-ui</artifactId>
             <version>${tacocloud.version}</version>
         </dependency>
         <dependency>
             <groupId>sia</groupId>
-            <artifactId>tacocloud-ui</artifactId>
+            <artifactId>tacocloud-api</artifactId>
             <version>${tacocloud.version}</version>
         </dependency>
 
