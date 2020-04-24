@@ -56,6 +56,8 @@ public class DesignAndOrderTacosBrowserTest {
         clickBuildAnotherTaco();
         buildAndSubmitATaco("Another Taco", "COTO", "CARN", "JACK", "LETC", "SRCR");
         fillInAndSubmitOrderForm();
+        assertEquals(orderDetailsPageUrl(), browser.getCurrentUrl());
+        browser.get(homePageUrl());
         assertEquals(homePageUrl(), browser.getCurrentUrl());
         doLogout();
     }
@@ -71,6 +73,8 @@ public class DesignAndOrderTacosBrowserTest {
         buildAndSubmitATaco("Basic Taco", "FLTO", "GRBF", "CHED", "TMTO", "SLSA");
         submitEmptyOrderForm();
         fillInAndSubmitOrderForm();
+        assertEquals(orderDetailsPageUrl(), browser.getCurrentUrl());
+        browser.get(homePageUrl());
         assertEquals(homePageUrl(), browser.getCurrentUrl());
         doLogout();
     }
@@ -86,6 +90,8 @@ public class DesignAndOrderTacosBrowserTest {
         buildAndSubmitATaco("Basic Taco", "FLTO", "GRBF", "CHED", "TMTO", "SLSA");
         submitInvalidOrderForm();
         fillInAndSubmitOrderForm();
+        assertEquals(orderDetailsPageUrl(), browser.getCurrentUrl());
+        browser.get(homePageUrl());
         assertEquals(homePageUrl(), browser.getCurrentUrl());
         doLogout();
     }
@@ -145,6 +151,13 @@ public class DesignAndOrderTacosBrowserTest {
 
     private void submitEmptyOrderForm() {
         assertEquals(currentOrderDetailsPageUrl(), browser.getCurrentUrl());
+
+        // clear fields automatically populated from user profile
+        fillField("input#deliveryName", "");
+        fillField("input#deliveryStreet", "");
+        fillField("input#deliveryCity", "");
+        fillField("input#deliveryState", "");
+        fillField("input#deliveryZip", "");
         browser.findElementByCssSelector("form#orderForm").submit();
 
         assertEquals(orderDetailsPageUrl(), browser.getCurrentUrl());
@@ -179,7 +192,7 @@ public class DesignAndOrderTacosBrowserTest {
         fillField("input#ccNumber", "4111111111111111");
         fillField("input#ccExpiration", "10/19");
         fillField("input#ccCVV", "123");
-        browser.findElementByCssSelector("form").submit();
+        browser.findElementByCssSelector("form#orderForm").submit();
     }
 
     private void fillField(String fieldName, String value) {

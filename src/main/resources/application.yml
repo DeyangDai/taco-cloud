@@ -3,10 +3,14 @@ spring:
     url:        jdbc:mysql://localhost/taco-cloud
     username:   root
     password:   1121
-    data:
-      - classpath:data.sql
-    initialization-mode: always
+#    data:
+#      - classpath:data.sql
+#    initialization-mode: always
 
   jpa:
     hibernate:
       ddl-auto: create-drop
+
+taco:
+  orders:
+    page-size: 10
