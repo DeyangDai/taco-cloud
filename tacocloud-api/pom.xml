@@ -29,11 +29,6 @@
             <artifactId>tacocloud-domain</artifactId>
             <version>${tacocloud.version}</version>
         </dependency>
-        <dependency>
-            <groupId>sia</groupId>
-            <artifactId>tacocloud-security</artifactId>
-            <version>${tacocloud.version}</version>
-        </dependency>
 
         <!-- Necessary boot starters -->
         <dependency>
@@ -58,6 +53,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.2.5.RELEASE</version>
+        </dependency>
     </dependencies>
-
 </project>
