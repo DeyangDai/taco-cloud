@@ -6,7 +6,7 @@ import org.springframework.hateoas.server.core.Relation;
 import tacos.Ingredient;
 import tacos.Ingredient.Type;
 
-//@Relation(value = "ingredient", collectionRelation = "ingredients")
+@Relation(value = "ingredient", collectionRelation = "ingredients")
 public class IngredientModel extends RepresentationModel<IngredientModel> {
 
     @Getter

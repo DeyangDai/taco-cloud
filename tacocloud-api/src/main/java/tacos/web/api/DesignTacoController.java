@@ -10,6 +10,7 @@ import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tacos.Taco;
 import tacos.data.TacoRepository;
@@ -35,26 +36,26 @@ public class DesignTacoController {
         this.entityLinks = entityLinks;
     }
 
-//    @GetMapping("/recent")
-//    public Iterable<Taco> recentTacos() {
-//        PageRequest pageRequest = PageRequest.of(0, 12, Sort.by("createdAt").descending());
-//        return tacoRepository.findAll(pageRequest).getContent();
-//    }
-
     @GetMapping("/recent")
-    public CollectionModel<TacoModel> recentTacos() {
+    public Iterable<Taco> recentTacos() {
         PageRequest pageRequest = PageRequest.of(0, 12, Sort.by("createdAt").descending());
-        List<Taco> tacos = tacoRepository.findAll(pageRequest).getContent();
-
-        CollectionModel<TacoModel> tacoModels = new TacoModelAssembler().toCollectionModel(tacos);
-        tacoModels.add(linkTo(methodOn(DesignTacoController.class).recentTacos()).withRel("recents"));
-
-        return tacoModels;
+        return tacoRepository.findAll(pageRequest).getContent();
     }
+
+//    @GetMapping("/recent")
+//    public CollectionModel<TacoModel> recentTacos() {
+//        PageRequest pageRequest = PageRequest.of(0, 12, Sort.by("createdAt").descending());
+//        List<Taco> tacos = tacoRepository.findAll(pageRequest).getContent();
+//
+//        CollectionModel<TacoModel> tacoModels = new TacoModelAssembler().toCollectionModel(tacos);
+//        tacoModels.add(linkTo(methodOn(DesignTacoController.class).recentTacos()).withRel("recents"));
+//
+//        return tacoModels;
+//    }
 
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Taco postTaco(@RequestBody Taco taco) {
+    public Taco postTaco(@RequestBody @Validated Taco taco) {
         return tacoRepository.save(taco);
     }
 
