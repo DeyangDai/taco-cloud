@@ -10,7 +10,7 @@
 	<parent>
     <groupId>sia</groupId>
     <artifactId>taco-cloud-parent</artifactId>
-    <version>0.0.7-SNAPSHOT</version>
+    <version>${revision}</version>
 	</parent>
 
 	<name>tacocloud-ui</name>

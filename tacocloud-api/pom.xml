@@ -5,7 +5,7 @@
     <parent>
         <groupId>sia</groupId>
         <artifactId>taco-cloud-parent</artifactId>
-        <version>0.0.7-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>tacocloud-api</artifactId>
@@ -22,12 +22,22 @@
         <dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-data</artifactId>
-            <version>${tacocloud.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-domain</artifactId>
-            <version>${tacocloud.version}</version>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>sia</groupId>
+            <artifactId>tacocloud-security</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>sia</groupId>
+            <artifactId>tacocloud-messaging-jms</artifactId>
+            <version>${revision}</version>
         </dependency>
 
         <!-- Necessary boot starters -->
@@ -62,6 +72,10 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>5.2.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-artemis</artifactId>
         </dependency>
     </dependencies>
 </project>

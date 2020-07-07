@@ -5,7 +5,7 @@
     <parent>
         <groupId>sia</groupId>
         <artifactId>taco-cloud-parent</artifactId>
-        <version>0.0.7-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>tacocloud-data</artifactId>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-domain</artifactId>
-            <version>${tacocloud.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- Necessary boot starters -->

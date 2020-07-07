@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tacos.Order;
 import tacos.data.OrderRepository;
+import tacos.messaging.OrderMessagingService;
 
 @RestController
 @RequestMapping(path = "/orders", produces = "application/json")
@@ -13,10 +14,12 @@ import tacos.data.OrderRepository;
 public class OrderApiController {
 
     private OrderRepository orderRepository;
+    private OrderMessagingService orderMessagingService;
 
     @Autowired
-    public OrderApiController(OrderRepository orderRepository) {
+    public OrderApiController(OrderRepository orderRepository, OrderMessagingService orderMessagingService) {
         this.orderRepository = orderRepository;
+        this.orderMessagingService = orderMessagingService;
     }
 
     @GetMapping(produces = "application/json")
@@ -27,10 +30,11 @@ public class OrderApiController {
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public Order postOrder(@RequestBody Order order) {
+        orderMessagingService.sendOrder(order);
         return orderRepository.save(order);
     }
 
-    @PutMapping(path = "/{orderId}", consumes = "application/jsoon")
+    @PutMapping(path = "/{orderId}", consumes = "application/json")
     public Order putOrder(@RequestBody Order order) {
         return orderRepository.save(order);
     }

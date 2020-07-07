@@ -5,7 +5,7 @@
     <parent>
         <groupId>sia</groupId>
         <artifactId>taco-cloud-parent</artifactId>
-        <version>0.0.7-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>tacos</artifactId>
@@ -22,27 +22,27 @@
         <dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-data</artifactId>
-            <version>${tacocloud.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-domain</artifactId>
-            <version>${tacocloud.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-security</artifactId>
-            <version>${tacocloud.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-ui</artifactId>
-            <version>${tacocloud.version}</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-api</artifactId>
-            <version>${tacocloud.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- Database -->
