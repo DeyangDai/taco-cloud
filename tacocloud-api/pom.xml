@@ -34,9 +34,14 @@
             <artifactId>tacocloud-security</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-messaging-jms</artifactId>
+            <version>${revision}</version>
+        </dependency>-->
+        <dependency>
+            <groupId>sia</groupId>
+            <artifactId>tacocloud-messaging-rabbitmq</artifactId>
             <version>${revision}</version>
         </dependency>
 
@@ -73,9 +78,9 @@
             <artifactId>spring-web</artifactId>
             <version>5.2.5.RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-artemis</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-artemis</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

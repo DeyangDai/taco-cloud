@@ -3,7 +3,7 @@ server:
     8081
 spring:
   profiles:
-    active: jms-listener
+    active: rabbitmq-listener
 
 ---
 spring:
@@ -18,3 +18,7 @@ spring:
     password: letmein
     embedded:
       enabled: false
+
+---
+spring:
+  profiles: rabbitmq-template, rabbitmq-listener
