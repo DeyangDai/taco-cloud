@@ -3,7 +3,7 @@ server:
     8081
 spring:
   profiles:
-    active: kafka-listener
+    active: rabbitmq-listener
 
 ---
 spring:

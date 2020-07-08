@@ -39,16 +39,16 @@
             <artifactId>tacocloud-messaging-jms</artifactId>
             <version>${revision}</version>
         </dependency>-->
-        <!--<dependency>
+        <dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-messaging-rabbitmq</artifactId>
             <version>${revision}</version>
-        </dependency>-->
-        <dependency>
+        </dependency>
+        <!--<dependency>
             <groupId>sia</groupId>
             <artifactId>tacocloud-messaging-kafka</artifactId>
             <version>${revision}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- Necessary boot starters -->
         <dependency>
