@@ -3,7 +3,7 @@ server:
     8081
 spring:
   profiles:
-    active: rabbitmq-listener
+    active: kafka-listener
 
 ---
 spring:
@@ -22,3 +22,17 @@ spring:
 ---
 spring:
   profiles: rabbitmq-template, rabbitmq-listener
+
+---
+spring:
+  profiles: kafka-listener
+  kafka:
+    bootstrap-servers:
+      - localhost:9092
+    template:
+      default-topic: tacocloud.orders.topic
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: tacocloud_kitchen
+      properties:
+        spring.json.trusted.packages: tacos
